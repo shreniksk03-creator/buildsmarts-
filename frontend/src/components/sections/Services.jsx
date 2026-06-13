@@ -75,7 +75,7 @@ export default function Services() {
               <span className="bsi-gold-text italic">your blueprint.</span>
             </h2>
           </motion.div>
-          <p className="text-gray-400 max-w-md">
+          <p className="text-gray-300 max-w-md">
             Six core capabilities — covered end to end, with zero handover gaps
             between architects, engineers and execution teams.
           </p>
@@ -101,14 +101,14 @@ export default function Services() {
               <h3 className="mt-7 font-display text-2xl md:text-3xl font-semibold leading-tight">
                 {s.title}
               </h3>
-              <p className="mt-3 text-gray-400 text-sm leading-relaxed max-w-lg">
+              <p className="mt-3 text-gray-300 text-sm leading-relaxed max-w-lg">
                 {s.desc}
               </p>
               <ul className="mt-6 flex flex-wrap gap-2">
                 {s.items.map((it) => (
                   <li
                     key={it}
-                    className="text-[11px] uppercase tracking-[0.15em] px-3 py-1 border border-white/10 text-gray-300"
+                    className="text-[11px] uppercase tracking-[0.15em] px-3 py-1 border border-white/10 text-gray-200"
                   >
                     {it}
                   </li>

@@ -58,7 +58,7 @@ export default function WhyChooseUs() {
                 <it.icon className="w-5 h-5 bsi-gold-text group-hover:text-[#050A15]" strokeWidth={1.5} />
               </div>
               <h3 className="mt-6 font-display text-xl font-semibold">{it.title}</h3>
-              <p className="mt-2 text-sm text-gray-400 leading-relaxed">{it.desc}</p>
+              <p className="mt-2 text-sm text-gray-300 leading-relaxed">{it.desc}</p>
             </motion.div>
           ))}
         </div>

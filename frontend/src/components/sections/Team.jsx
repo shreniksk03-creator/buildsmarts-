@@ -80,7 +80,7 @@ export default function Team() {
             The people behind <br />
             <span className="bsi-gold-text italic">every blueprint.</span>
           </h2>
-          <p className="mt-6 text-base text-gray-400 max-w-xl">
+          <p className="mt-6 text-base text-gray-300 max-w-xl">
             A team that blends decades of construction wisdom with the
             sharp design sensibility of a modern architecture studio.
           </p>
@@ -113,8 +113,8 @@ export default function Team() {
                 <h3 className="mt-2 font-display text-xl font-semibold text-white">
                   {m.name}
                 </h3>
-                <div className="mt-1 text-xs text-gray-500">{m.qualification}</div>
-                <p className="mt-4 text-sm text-gray-400 leading-relaxed line-clamp-3">
+                <div className="mt-1 text-xs text-gray-300">{m.qualification}</div>
+                <p className="mt-4 text-sm text-gray-300 leading-relaxed line-clamp-3">
                   {m.bio}
                 </p>
                 <div className="mt-5 pt-4 border-t border-white/5 flex items-center justify-between">

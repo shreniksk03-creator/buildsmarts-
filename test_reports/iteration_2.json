@@ -1,0 +1,27 @@
+{
+  "summary": "Iteration 2 frontend-only Playwright testing for Build Smarts Infra. All 20 requested new features (theme toggle/persistence, expanded portfolio + full gallery, lead magnet, trust badges, client logos, cost calculator, ongoing projects, before/after, google reviews, sticky estimate, brochure download, contact map, repositioned WhatsApp/BackToTop) pass. No console errors. Original iteration-1 flows still pass.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "StickyEstimate uses AnimatePresence keyed on scrollY>700. On the very first paint at scrollY=0 it correctly does NOT render. However after scrolling beyond 700 and back to 0, the framer-motion exit animation can briefly keep the node in DOM (opacity 0, x:-100). Not user-visible — acceptable, but a consumer of is_visible() may report true. Consider unmounting cleanly or also setting display:none on exit.",
+    "CSS transition on body background-color (0.4s) causes the first getComputedStyle reading taken immediately after theme switch to show a mid-transition value (rgb(92,95,102)) instead of the target rgb(255,255,255). After settle, it's correctly white. Not a bug — just noting that tests measuring colors must wait > 400ms after toggle.",
+    "Hero VIDEO_URL still points to external coverr.co CDN (carried over from iteration 1) — poster fallback handles 404s, but self-hosting under /public is recommended for reliability."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (frontend-only)", "frontend": "100%"},
+  "test_credentials": "N/A (no auth)",
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "All iteration-2 acceptance items pass at https://infra-showcase-live.preview.emergentagent.com. Verified end-to-end:\n\nTHEME:\n- Cleared localStorage + prefers-color-scheme:light → page loads data-theme='light' (system pref default).\n- localStorage='dark' on reload → data-theme='dark'.\n- Clicking [data-testid='theme-toggle'] flips dark↔light, sets data-theme on <html>, writes localStorage 'bsi-theme', persists across reload.\n- Light mode (after ~500ms settle): body bg=rgb(255,255,255), main bg=rgb(255,255,255) (override of bg-[#050A15] works via [data-theme=\"light\"] selectors in index.css), hero h1 color=rgb(15,23,42) dark navy.\n- Dark mode: body bg=rgb(5,10,21), white text.\n\nNEW SECTIONS:\n- TrustBadges: 4 badges render under hero (testids trust-badge-0..3).\n- ClientLogos: marquee with 20 logo nodes (10 brands × 2 for seamless loop).\n- CostCalculator: area slider input updates total (area=5000 with default Gold/G+1 = ₹1,99,90,000). Package buttons cost-input-pkg-silver/gold/diamond correctly switch rate (Silver 1799, Gold 1999, Diamond 2250). Floors select G+1..G+3 multiplies built-up area. cost-cta-quote scrolls to #contact.\n- Portfolio: exactly 8 cards render in masonry. portfolio-view-all opens portfolio-full-gallery showing all 8 items (full-gallery-item-0..7). portfolio-full-gallery-close closes it.\n- OngoingProjects: 3 cards with progress bars.\n- BeforeAfter: 2 sub-sliders render inside beforeafter-section with both images visible.\n- GoogleReviews: 4 review cards (review-card-0..3), reviews-summary shows '4.9 / 5' with 5 gold stars.\n- LeadMagnet: empty submit shows toast 'Please fill in your name and email.'; filling firstname+email shows 'Guide on its way! Check your inbox shortly.' and clears both fields.\n- BrochureDownload: brochure-download-btn triggers toast 'Brochure download will begin shortly. Check your downloads folder.' (PDF placeholder 404 is expected, button + toast work).\n- Contact: contact-map iframe present inside contact section.\n\nFLOATING / FIXED UI:\n- WhatsApp button (whatsapp-floating-button) at scroll=1500: bottom-offset=80px (bottom-20), right=1840px (right-6 of 1920 viewport).\n- BackToTop (back-to-top) at scroll=1500: bottom-offset=160px (bottom-40), visually above WhatsApp. Confirmed no overlap with Emergent badge or WhatsApp.\n- StickyEstimate (sticky-estimate-button): not rendered on fresh load at scrollY=0; appears after scroll > 700px on desktop (hidden md:flex — mobile correctly excluded).\n\nNAV / ORIGINAL FLOWS (iter-1 regression):\n- nav-link-portfolio smooth-scrolls correctly.\n- contact-submit on empty form shows error toast.\n- All 6 desktop nav links, mobile nav, hero CTAs, packages toggle, testimonials carousel, FAQ accordion remain functional (unchanged behavior).\n\nNOTES:\n- Visual-edits package wraps elements; both page.click(force=True) and page.evaluate('el.click()') work for theme toggle and package buttons.\n- For range slider testing, use native setter + dispatch 'input' event (not page.fill).",
+  "rca of the issue": "N/A — no functional issues found in iteration 2 scope."
+}

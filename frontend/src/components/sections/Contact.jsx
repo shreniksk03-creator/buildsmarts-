@@ -94,6 +94,19 @@ export default function Contact() {
                 </a>
               ))}
             </div>
+
+            {/* Office Map */}
+            <div className="mt-6 border border-white/10 overflow-hidden" data-testid="contact-map">
+              <iframe
+                title="Build Smarts Infra · Office Location"
+                src="https://www.google.com/maps?q=Bengaluru,Karnataka,India&output=embed"
+                width="100%"
+                height="240"
+                style={{ border: 0, filter: "grayscale(40%) contrast(1.1)" }}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
           </motion.div>
 
           <motion.form

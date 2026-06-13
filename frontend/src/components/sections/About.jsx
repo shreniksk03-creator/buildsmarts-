@@ -66,12 +66,12 @@ export default function About() {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="lg:col-span-7 lg:pt-24"
           >
-            <p className="text-lg text-gray-300 leading-relaxed">
+            <p className="text-lg text-gray-200 leading-relaxed">
               Build Smarts Infra is a trusted construction and infrastructure
               company delivering residential, commercial, architectural, and
               interior solutions across Bengaluru.
             </p>
-            <p className="mt-5 text-base text-gray-400 leading-relaxed">
+            <p className="mt-5 text-base text-gray-300 leading-relaxed">
               Our commitment to quality construction, transparency, innovation,
               and timely delivery has helped us successfully complete numerous
               projects while earning long-term client trust — built one
@@ -94,7 +94,7 @@ export default function About() {
                   </div>
                   <div>
                     <h3 className="font-display text-xl text-white">{p.title}</h3>
-                    <p className="mt-1 text-sm text-gray-400 leading-relaxed">
+                    <p className="mt-1 text-sm text-gray-300 leading-relaxed">
                       {p.text}
                     </p>
                   </div>

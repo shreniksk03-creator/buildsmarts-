@@ -2,12 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* ============ THEME VARIABLES ============ */
+:root,
+[data-theme="dark"] {
     --bsi-bg: #050A15;
     --bsi-bg-2: #0F172A;
+    --bsi-bg-3: #0A101C;
+    --bsi-card: #0F172A;
+    --bsi-footer-bg: #02040A;
+    --bsi-text: #FFFFFF;
+    --bsi-text-2: #E5E7EB;
+    --bsi-text-3: #CBD5E1;
+    --bsi-text-muted: #94A3B8;
+    --bsi-border: rgba(255, 255, 255, 0.1);
     --bsi-gold: #D4AF37;
     --bsi-gold-hover: #F3E5AB;
-    --bsi-text-muted: #9CA3AF;
+    color-scheme: dark;
+}
+
+[data-theme="light"] {
+    --bsi-bg: #FFFFFF;
+    --bsi-bg-2: #F8FAFC;
+    --bsi-bg-3: #F1F5F9;
+    --bsi-card: #FFFFFF;
+    --bsi-footer-bg: #0F172A; /* footer stays dark for premium feel */
+    --bsi-text: #0F172A;
+    --bsi-text-2: #1E293B;
+    --bsi-text-3: #334155;
+    --bsi-text-muted: #475569;
+    --bsi-border: rgba(15, 23, 42, 0.1);
+    --bsi-gold: #D4AF37;
+    --bsi-gold-hover: #B8941F;
+    color-scheme: light;
 }
 
 * {
@@ -16,48 +42,47 @@
 
 html {
     scroll-behavior: smooth;
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 body {
     margin: 0;
     background-color: var(--bsi-bg);
-    color: #ffffff;
+    color: var(--bsi-text);
     font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
+
+/* Apply smooth color transitions across the whole tree */
+[data-theme] *,
+[data-theme] *::before,
+[data-theme] *::after {
+    transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+}
+/* but never animate transforms/opacity (would break framer-motion) */
 
 .font-display {
     font-family: 'Playfair Display', serif;
 }
-
 .font-body {
     font-family: 'Outfit', sans-serif;
 }
 
-/* selection */
 ::selection {
     background: var(--bsi-gold);
     color: #050A15;
 }
 
-/* scrollbar */
-::-webkit-scrollbar {
-    width: 10px;
-}
-::-webkit-scrollbar-track {
-    background: #050A15;
-}
-::-webkit-scrollbar-thumb {
-    background: #1f2937;
-    border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: var(--bsi-gold);
-}
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bsi-bg); }
+::-webkit-scrollbar-thumb { background: var(--bsi-border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--bsi-gold); }
 
-/* shadcn base tokens (kept for component compatibility, dark luxury theme) */
 @layer base {
     :root {
         --background: 222 47% 5%;
@@ -81,15 +106,9 @@ body {
         --ring: 44 65% 52%;
         --radius: 0.5rem;
     }
+    * { @apply border-border; }
 }
 
-@layer base {
-    * {
-        @apply border-border;
-    }
-}
-
-/* utilities */
 .bsi-grain::before {
     content: "";
     position: absolute;
@@ -100,19 +119,18 @@ body {
     mix-blend-mode: overlay;
 }
 
-.bsi-gold-text {
-    color: var(--bsi-gold);
-}
-
-.bsi-gold-bg {
-    background-color: var(--bsi-gold);
-}
-
+.bsi-gold-text { color: var(--bsi-gold); }
+.bsi-gold-bg { background-color: var(--bsi-gold); }
 .bsi-glass {
     background: rgba(15, 23, 42, 0.55);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
     border: 1px solid rgba(255, 255, 255, 0.08);
+}
+[data-theme="light"] .bsi-glass {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
 
 .bsi-overline {
@@ -124,17 +142,123 @@ body {
 }
 
 /* Embla carousel */
-.embla {
-    overflow: hidden;
+.embla { overflow: hidden; }
+.embla__container { display: flex; }
+.embla__slide { flex: 0 0 100%; min-width: 0; }
+
+[data-debug-wrapper="true"] { display: contents !important; }
+
+/* ============ LIGHT MODE OVERRIDES ============ */
+/* Map all hardcoded dark-theme Tailwind classes to light-theme equivalents.
+   Specificity: [data-theme="light"] prefix means these only apply in light mode. */
+
+[data-theme="light"] .bg-\[\#050A15\],
+[data-theme="light"] .bg-\[\#050A15\]\/95,
+[data-theme="light"] .bg-\[\#050A15\]\/98 {
+    background-color: var(--bsi-bg) !important;
 }
-.embla__container {
-    display: flex;
-}
-.embla__slide {
-    flex: 0 0 100%;
-    min-width: 0;
+[data-theme="light"] .bg-\[\#050A15\]\/70,
+[data-theme="light"] .bg-\[\#050A15\]\/60,
+[data-theme="light"] .bg-\[\#050A15\]\/85 {
+    background-color: rgba(248, 250, 252, 0.85) !important;
 }
 
-[data-debug-wrapper="true"] {
-    display: contents !important;
+[data-theme="light"] .bg-\[\#0F172A\] {
+    background-color: var(--bsi-card) !important;
+    box-shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
+}
+[data-theme="light"] .bg-\[\#0F172A\]\/60,
+[data-theme="light"] .bg-\[\#0F172A\]\/70,
+[data-theme="light"] .bg-\[\#0F172A\]\/40 {
+    background-color: rgba(255, 255, 255, 0.85) !important;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+}
+
+[data-theme="light"] .bg-\[\#0A101C\] {
+    background-color: var(--bsi-bg-2) !important;
+}
+
+/* Footer keeps dark luxury feel — do not override .bg-\[\#02040A\] */
+
+/* Gradient package backgrounds */
+[data-theme="light"] .bg-gradient-to-b.from-\[\#1a1505\].to-\[\#0F172A\] {
+    background: linear-gradient(to bottom, #FDF6E3, #FFFFFF) !important;
+}
+[data-theme="light"] .bg-gradient-to-r.from-\[\#0F172A\].via-\[\#1a1505\].to-\[\#0F172A\] {
+    background: linear-gradient(to right, #F8FAFC, #FBF7EC, #F8FAFC) !important;
+}
+
+/* Text colors */
+[data-theme="light"] .text-white { color: var(--bsi-text) !important; }
+[data-theme="light"] .text-gray-100 { color: var(--bsi-text) !important; }
+[data-theme="light"] .text-gray-200 { color: var(--bsi-text-2) !important; }
+[data-theme="light"] .text-gray-300 { color: var(--bsi-text-3) !important; }
+[data-theme="light"] .text-gray-400 { color: var(--bsi-text-muted) !important; }
+[data-theme="light"] .text-gray-500 { color: #64748B !important; }
+[data-theme="light"] .text-gray-600 { color: #475569 !important; }
+
+/* Borders */
+[data-theme="light"] [class*="border-white\/"] {
+    border-color: rgba(15, 23, 42, 0.1) !important;
+}
+[data-theme="light"] [class*="divide-white\/"] > * + * {
+    border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+/* white/x background utilities */
+[data-theme="light"] [class*="bg-white\/"] {
+    background-color: rgba(15, 23, 42, 0.04) !important;
+}
+
+/* hover gold tint */
+[data-theme="light"] .hover\:bg-\[\#0F172A\]:hover {
+    background-color: var(--bsi-bg-2) !important;
+}
+
+/* Hero overlay should be lighter in light mode (image hero) */
+[data-theme="light"] .bg-gradient-to-b.from-\[\#050A15\]\/70.via-\[\#050A15\]\/65.to-\[\#050A15\] {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.75), #FFFFFF) !important;
+}
+[data-theme="light"] .bg-\[radial-gradient\(ellipse_at_center\,_transparent_30\%\,_\#050A15_85\%\)\] {
+    background: radial-gradient(ellipse at center, transparent 30%, #FFFFFF 85%) !important;
+}
+
+/* Tile chips in services */
+[data-theme="light"] .text-gray-200 + .text-gray-200 { color: var(--bsi-text-2) !important; }
+
+/* Form inputs in light mode */
+[data-theme="light"] input,
+[data-theme="light"] textarea,
+[data-theme="light"] select {
+    color: var(--bsi-text);
+}
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder {
+    color: #94A3B8;
+}
+
+/* Hover gold shadow stays gold but softer in light */
+[data-theme="light"] .hover\:shadow-\[0_0_40px_rgba\(212\,175\,55\,0\.08\)\]:hover {
+    box-shadow: 0 0 40px rgba(212, 175, 55, 0.18) !important;
+}
+
+/* Gold-tinted "Most Popular" card */
+[data-theme="light"] .border-\[\#D4AF37\].shadow-\[0_0_50px_rgba\(212\,175\,55\,0\.18\)\] {
+    box-shadow: 0 10px 40px rgba(212, 175, 55, 0.25) !important;
+}
+
+/* Selection in light mode */
+[data-theme="light"] ::selection {
+    background: var(--bsi-gold);
+    color: #FFFFFF;
+}
+
+/* Focus outlines for accessibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--bsi-gold);
+    outline-offset: 2px;
 }

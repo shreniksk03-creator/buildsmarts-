@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { useTheme } from "@/hooks/useTheme";
 
 const links = [
   { label: "About", href: "#about" },
@@ -14,6 +15,7 @@ const links = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { theme, toggle } = useTheme();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -64,22 +66,53 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <button
-          data-testid="navbar-cta-quote"
-          onClick={() => go("#contact")}
-          className="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 bsi-gold-bg text-[#050A15] font-semibold text-sm hover:bg-[#F3E5AB] transition-colors"
-        >
-          Get Quote
-        </button>
+        <div className="hidden lg:flex items-center gap-3">
+          <button
+            data-testid="theme-toggle"
+            onClick={toggle}
+            className="w-10 h-10 flex items-center justify-center border border-white/15 hover:border-[#D4AF37] hover:text-[#D4AF37] transition-colors"
+            aria-label="Toggle theme"
+          >
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={theme}
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="flex"
+              >
+                {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </motion.span>
+            </AnimatePresence>
+          </button>
+          <button
+            data-testid="navbar-cta-quote"
+            onClick={() => go("#contact")}
+            className="inline-flex items-center gap-2 px-5 py-2.5 bsi-gold-bg text-[#050A15] font-semibold text-sm hover:bg-[#F3E5AB] transition-colors"
+          >
+            Get Quote
+          </button>
+        </div>
 
-        <button
-          data-testid="navbar-mobile-toggle"
-          className="lg:hidden text-white"
-          onClick={() => setOpen(!open)}
-          aria-label="Menu"
-        >
-          {open ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
-        </button>
+        <div className="flex lg:hidden items-center gap-3">
+          <button
+            data-testid="theme-toggle-mobile"
+            onClick={toggle}
+            className="w-10 h-10 flex items-center justify-center border border-white/15"
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
+          <button
+            data-testid="navbar-mobile-toggle"
+            className="text-white"
+            onClick={() => setOpen(!open)}
+            aria-label="Menu"
+          >
+            {open ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>

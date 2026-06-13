@@ -10,7 +10,7 @@ export default function WhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       data-testid="whatsapp-floating-button"
-      className="fixed bottom-6 right-6 z-40 group"
+      className="fixed bottom-20 right-6 z-40 group"
       aria-label="Chat on WhatsApp"
     >
       <span className="absolute inset-0 rounded-full bg-green-500/40 animate-ping" />
