@@ -14,7 +14,7 @@ import { ArrowRight, Play } from "lucide-react";
  * Video must be muted + autoplay + playsInline + loop for mobile autoplay.
  */
 const VIDEO_URL =
-  "https://cdn.coverr.co/videos/coverr-building-construction-site-2752/1080p.mp4";
+  "https://customer-assets.emergentagent.com/job_infra-showcase-live/artifacts/27dnrobq_homepage.mp4";
 
 const POSTER_IMG =
   "https://images.unsplash.com/photo-1519143009590-e3800b9df468?crop=entropy&cs=srgb&fm=jpg&q=85&w=1920";
